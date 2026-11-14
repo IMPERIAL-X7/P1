@@ -8,6 +8,16 @@ Entry for **Build Before Q-Day** (Post-Quantum dApp category + Q-Day Drill).
 - **Contract:** [contracts/QDayVault.sol](contracts/QDayVault.sol)
 - **Tests (each mapped to a theorem):** [test/QDayVault.ts](test/QDayVault.ts)
 
+## Deployed (QoreChain testnet `qorechain-diana`, EVM chain 9800)
+
+| | |
+|---|---|
+| Vault | [`0x4a577d8dcc5fecf9833a8232150be6a1cfb00bd6`](https://explore.qore.network/address/0x4a577d8dcc5fecf9833a8232150be6a1cfb00bd6) |
+| Owner account (drill account) | `qor1jyt0h92pzv0aeekz97vz8qx4tdukpa8cc6r8r9` / `0x9116FB9541131fdcE6c22f982380d55b7960f4f8` |
+| Settings | instant limit 1 QOR/day, delay 1 h, guardian key set, owner key bound to the account's registered ML-DSA-87 key (proof of possession checked on chain at deploy) |
+
+Live-tested on testnet with real ML-DSA-87 signatures: deposit, instant withdrawal, queued withdrawal, guardian cancel, guardian freeze, joint unfreeze. `npm run attack` replays the Q-Day Drill attacker with only the ECDSA key; all 14 attacks are refused (details in [docs/SECURITY_PROOFS.md §7](docs/SECURITY_PROOFS.md#7-the-q-day-drill-account)).
+
 ## Features
 
 - ML-DSA-87 authorisation for every withdrawal and settings change (`pqcVerify`, `0x…0A01`)
@@ -25,6 +35,7 @@ npm install
 npm test          # unit tests, real ML-DSA-87 signatures, simulated chain
 npm run probe     # read-only check of the live testnet pqcVerify precompile
 npm run vault             # list CLI commands
+npm run attack            # live attack simulation with only the ECDSA key (testnet)
 ```
 
 ## Testnet runbook (drill account)

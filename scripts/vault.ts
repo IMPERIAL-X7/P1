@@ -25,7 +25,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { buildRegisterPqcKeyMsg, closeEvmWindowMsg, fetchPqcStatus, generatePqcKeypair, generatePqcRecoveryCode, isRegisteredPqcKey, openEvmWindowMsg, signProofOfPossession } from "@qorechain/sdk";
 import { evmWindowCost, evmWindowStatus } from "@qorechain/evm";
-import { formatEther, getAddress, parseEther, type Address } from "viem";
+import { formatEther, getAddress, keccak256, parseEther, type Address } from "viem";
 import { generatePrivateKey } from "viem/accounts";
 
 import { broadcastNative, clients, DEPLOYMENT_FILE, GUARDIAN_FILE, hybridSelfTransfer, loadAccount, loadDeployment, loadGuardian, NET } from "./lib/chain.js";
@@ -69,6 +69,11 @@ async function statusCmd() {
   const pqc = await fetchPqcStatus({ rest: NET.rest, address: acc.cosmos });
   const mine = pqc.registered ? isRegisteredPqcKey(pqc, acc.pqc.publicKey) : false;
   console.log(`PQC key  ${pqc.registered ? (mine ? "registered (this key)" : "registered, but NOT this key") : "not registered"}`);
+  // What the vault's constructor checks, read through the pqcKeyStatus precompile itself.
+  const keyStatusAbi = [{ type: "function", name: "pqcKeyStatus", stateMutability: "view", inputs: [{ name: "a", type: "address" }], outputs: [{ type: "bool" }, { type: "uint8" }, { type: "bytes" }, { type: "bool" }] }] as const;
+  const [reg, alg, pk, pop] = await publicClient.readContract({ address: "0x0000000000000000000000000000000000000a02", abi: keyStatusAbi, functionName: "pqcKeyStatus", args: [getAddress(acc.evm)] });
+  const same = keccak256(pk) === keccak256(toHexBytes(acc.pqc.publicKey));
+  console.log(`         precompile: registered ${reg}, algorithm ${alg}, possessionProven ${pop}, same key ${same}`);
   const w = await evmWindowStatus({ rest: NET.rest, address: acc.cosmos });
   console.log(`window   ${w.found ? `${w.live ? "LIVE" : "not usable"}: ${w.remainingBlocks} blocks, ${w.remainingTxs} txs, ${w.remainingValue} uqor left` : "none"}`);
   if (!existsSync(DEPLOYMENT_FILE)) return console.log("vault    not deployed");

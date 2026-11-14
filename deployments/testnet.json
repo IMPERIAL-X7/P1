@@ -1,0 +1,9 @@
+{
+  "vault": "0x4a577d8dcc5fecf9833a8232150be6a1cfb00bd6",
+  "deployer": "0x9116FB9541131fdcE6c22f982380d55b7960f4f8",
+  "deployerNative": "qor1jyt0h92pzv0aeekz97vz8qx4tdukpa8cc6r8r9",
+  "txHash": "0xdfcd4a91c176f6f5d27c1970236c3518cc00fb5c21c03b5b7993926198ffdd2c",
+  "block": 10071490,
+  "nativeLimit": "1000000000000000000",
+  "delay": 3600
+}

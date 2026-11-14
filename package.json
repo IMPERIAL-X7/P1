@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "window": "tsx --env-file=.env scripts/window.ts",
     "probe": "tsx scripts/probe-pqc.ts",
-    "vault": "tsx scripts/vault.ts"
+    "vault": "tsx scripts/vault.ts",
+    "attack": "tsx scripts/attack-sim.ts"
   },
   "dependencies": {
     "@cosmjs/stargate": "^0.39.0",

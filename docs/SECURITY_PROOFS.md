@@ -266,6 +266,21 @@ In the Drill, the organisers' bot gets the **ECDSA key** of our testnet account.
 3. **Key independence.** We create the drill account with `unifiedAccountFromSeed(ecdsaKey, { recoveryCode })`. Its ML-DSA key is derived **only** from a separate secret recovery code, so the leaked ECDSA key carries **zero information** about it.
 4. **Approvals.** The vault never calls `transferFrom` and never grants approvals, so there is no allowance to drain.
 
+**Live evidence (14 Nov 2026, testnet).** [`scripts/attack-sim.ts`](../scripts/attack-sim.ts) (`npm run attack`) loads **only** the drill account's ECDSA key, never the recovery code or the guardian key, and attacks our account and vault:
+
+| Layer | Attack | Result |
+|---|---|---|
+| Native | bank send, ECDSA only | refused, pqc code 20 |
+| Native | bank send, hybrid with a guessed PQ key | refused, pqc code 21 |
+| Native | open an EVM window (ECDSA only / guessed PQ key) | refused, code 20 / 21 |
+| Native | register the attacker's PQ key over ours | refused, pqc code 234 |
+| EVM | QOR transfer; vault call | refused: "no open EVM authorisation window" |
+| Vault (eth_call, as if a window were open) | withdraw with the attacker's own ML-DSA key | `WrongKey()` |
+| Vault | owner key + forged/random signature: withdraw, take over, raise limit, freeze | `BadSignature()` |
+| Vault | replay a real past owner signature read from the chain | `Expired()` (the nonce also blocks it, Theorem 2) |
+
+The same day, the real flows succeeded on chain with real signatures: deposit, an instant withdrawal, a queued withdrawal, a guardian cancel, a guardian freeze, and a joint unfreeze.
+
 ---
 
 ## 8. What we do NOT claim
