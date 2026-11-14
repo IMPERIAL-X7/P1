@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+!.env.example
+artifacts/
+cache/
+types/
+coverage/
+ignition/deployments/chain-31337/
+*.log
+# Strategy notes for all projects stay private
+HACKATHON_SUMMARY.md
+CLAUDE.md
+secrets/
