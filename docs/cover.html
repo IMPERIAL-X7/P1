@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Q-Day Vault cover</title>
+<style>
+  html,body{margin:0;width:1920px;height:1080px;overflow:hidden}
+  body{background:#0a0b14;font-family:"Inter","Inter Display","Noto Sans",sans-serif;color:#eef0ff;position:relative}
+  .grid{position:absolute;inset:0;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:64px 64px}
+  .glow{position:absolute;width:1100px;height:1100px;right:-200px;top:-60px;background:radial-gradient(circle,#7c3aed40,transparent 62%)}
+  .left{position:absolute;left:120px;top:150px;width:900px}
+  .kicker{font:600 26px/1 "JetBrains Mono",monospace;letter-spacing:.14em;color:#a78bfa;text-transform:uppercase}
+  h1{font-size:150px;line-height:1;margin:34px 0 0;font-weight:800;letter-spacing:-.035em}
+  h1 span{color:#a78bfa}
+  .sub{font-size:44px;line-height:1.3;margin-top:40px;color:#c9cbe0;font-weight:500}
+  .sub b{color:#fff}
+  .chips{position:absolute;left:120px;bottom:120px;display:flex;gap:20px}
+  .chip{font:600 26px/1 "Inter",sans-serif;padding:20px 28px;border-radius:14px;border:2px solid #2c2f4a;background:#12142400;color:#d9dbf0}
+  .chip.ok{border-color:#22c55e80;color:#86efac}
+  .right{position:absolute;right:120px;top:170px;width:620px}
+  .key{border-radius:22px;padding:30px 34px;margin-bottom:26px;border:2px solid}
+  .key .t{font:700 24px/1 "JetBrains Mono",monospace;letter-spacing:.08em}
+  .key .d{font-size:32px;font-weight:600;margin-top:16px;line-height:1.25}
+  .bad{border-color:#ef444470;background:#ef444412}
+  .bad .t{color:#f87171}
+  .bad .d{color:#fecaca}
+  .good{border-color:#22c55e80;background:#22c55e14}
+  .good .t{color:#4ade80}
+  .good .d{color:#dcfce7}
+  .vault{border-radius:22px;padding:34px;border:2px solid #7c3aed;background:#7c3aed1c;display:flex;align-items:center;gap:30px}
+  .vault svg{flex:none}
+  .vault .d{font-size:34px;font-weight:700}
+  .vault .s{font-size:24px;color:#c4b5fd;margin-top:10px}
+  .arrow{text-align:center;font-size:40px;color:#6b6f94;margin:-6px 0 20px}
+</style></head>
+<body>
+<div class="grid"></div><div class="glow"></div>
+<div class="left">
+  <div class="kicker">QoreChain · Post-Quantum dApp</div>
+  <h1>Q-Day<br><span>Vault</span></h1>
+  <div class="sub">Your ECDSA key leaked?<br><b>Your funds are still safe.</b><br><br>Every withdrawal needs an ML-DSA-87 signature, verified on-chain.</div>
+</div>
+<div class="right">
+  <div class="key bad"><div class="t">ECDSA KEY · LEAKED</div><div class="d">Moves nothing. The vault ignores who sends the call.</div></div>
+  <div class="key good"><div class="t">ML-DSA-87 KEY · REQUIRED</div><div class="d">Checked by the pqcVerify precompile</div></div>
+  <div class="arrow">↓</div>
+  <div class="vault">
+    <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="12" cy="12" r="4"/><path d="M12 8v1.5M12 14.5V16M8 12h1.5M14.5 12H16M3 8h-1M3 16h-1"/></svg>
+    <div><div class="d">Timelock · Guardian · Freeze</div><div class="s">Daily limit, delayed large withdrawals, PQ-signed admin</div></div>
+  </div>
+</div>
+<div class="chips">
+  <div class="chip ok">14 / 14 key-only attacks blocked</div>
+  <div class="chip">73 tests · fuzz + invariants</div>
+  <div class="chip">Live on testnet</div>
+</div>
+</body></html>
